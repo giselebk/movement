@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+			<title>Movement</title>
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+  
+<body>
+
+	<!-------------------- Barra de logo / botão perfil / botão sair -------------------->
+	<nav class="navbar" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+			<a class="navbar-item" href="/">
+				<img src={{ url_for('static', filename="movement-logo.png") }} width="150" height="28">
+			</a>
+			<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+				<span aria-hidden="true"/>
+				<span aria-hidden="true"/>
+				<span aria-hidden="true"/>
+			</a>
+		</div>
+		<div id="navbarBasicExample" class="navbar-menu">
+			<div class="navbar-end">
+				<div class="navbar-item">
+					<div class="buttons">
+						<a href="{{ url_for('perfil') }}" class="button is-primary">
+							<strong>{{ name }}</strong>
+						</a>
+						<a href="{{ url_for('logout') }}" class="button is-light">
+						Sair
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+	
+	<!-------------------- Menu de Navegação -------------------->
+	<nav class="navbar" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+			<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="menuPrincipal">
+				<span aria-hidden="true"/>
+				<span aria-hidden="true"/>
+				<span aria-hidden="true"/>
+			</a>
+		</div>
+		<div id="menuPrincipal" class="navbar-menu">
+			<div class="navbar-start">
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link">
+					Alunos
+					</a>
+					<div class="navbar-dropdown">
+						<a href="{{ url_for('cadastrarAluno') }}" class="navbar-item {% if session['perfil'] == 'treinador' or session['perfil'] == 'aluno' %} is-hidden {% endif %}">
+						Cadastrar novo aluno
+						</a>
+						<a href="{{ url_for('consultarAluno') }}" class="navbar-item">
+						{% if session['perfil'] == 'treinador' %} Consultar cadastro 
+						{% else %} Consultar / editar cadastro {% endif %} 
+						</a>
+					</div>
+				</div>
+				<div class="navbar-item has-dropdown is-hoverable {% if session['perfil'] == 'treinador' or session['perfil'] == 'aluno' %} is-hidden {% endif %}">
+					<a class="navbar-link">
+					Colaboradores
+					</a>
+					<div class="navbar-dropdown">
+						<a href="{{ url_for('cadastrarColaborador') }}" class="navbar-item">
+						Cadastrar novo colaborador
+						</a>
+						<a href="{{ url_for('consultarColaborador') }}" class="navbar-item">
+						Consultar / editar cadastro
+						</a>
+					</div>
+				</div>
+				<div class="navbar-item has-dropdown is-hoverable {% if session['perfil'] == 'administrativo'%} is-hidden {% endif %}">
+					<a class="navbar-link">
+					Treinos
+					</a>
+					<div class="navbar-dropdown">
+						<a href="{{ url_for('cadastrarTreino') }}" class="navbar-item {% if session['perfil'] == 'aluno' %} is-hidden {% endif %}">
+						Cadastrar novo treino
+						</a>
+						<a href="{{ url_for('consultarTreino') }}" class="navbar-item">
+						{% if session['perfil'] == 'aluno' %} Consultar treino
+						{% else %} Consultar / editar treino {% endif %} 
+						</a>
+					</div>
+				</div>
+				<div class="navbar-item has-dropdown is-hoverable {% if session['perfil'] == 'treinador' %} is-hidden {% endif %}">
+					<a class="navbar-link">
+					Aulas
+					</a>
+					<div class="navbar-dropdown">
+						<a href="{{ url_for('cadastrarAula') }}" class="navbar-item {% if session['perfil'] == 'aluno' %} is-hidden {% endif %}">
+						Cadastrar nova aula
+						</a>
+						<a href="{{ url_for('consultarAula') }}" class="navbar-item {% if session['perfil'] == 'aluno' %} is-hidden {% endif %}">
+						Consultar / editar / excluir aula
+						</a>
+						<hr class="navbar-divider {% if session['perfil'] == 'aluno' %} is-hidden {% endif %}">
+						<a href="{{ url_for('aulasGradeSemanal') }}" class="navbar-item">
+						Grade de aulas semanais
+						</a>
+						<hr class="navbar-divider">
+							<a href="{{ url_for('reservarAula') }}" class="navbar-item">
+							Reservar aula
+							</a>
+							<a href="{{ url_for('consultarReservas') }}" class="navbar-item">
+							Consultar / cancelar reservas
+							</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<!-------------------- Conteúdo -------------------->
+	<section class="hero is-primary is-fullheight-with-navbar">
+		
+		<!-------------------- Trilha de migalhas -------------------->
+		{% if migalhas %}
+		<nav class="breadcrumb m-5" aria-label="breadcrumbs">
+		  <ul>
+			{% if migalhas|length>0 %}<li><a href="#">{{  migalhas[0]  }}</a></li>{% endif %}
+			{% if migalhas|length>1 %}<li><a href="#">{{  migalhas[1]  }}</a></li>{% endif %}
+			{% if migalhas|length>2 %}<li><a href="#">{{  migalhas[2]  }}</a></li>{% endif %}
+			{% if migalhas|length>3 %}<li><a href="#">{{  migalhas[3]  }}</a></li>{% endif %}
+		  </ul>
+		</nav>
+		{% endif %}
+		
+		<!-------------------- Conteúdo específico de cada página -------------------->
+		{% block content %}
+		{% endblock %}
+		
+	</section>
+	
+</body>
+ 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  // coleta todos os elementos "navbar-burger"
+  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+  // Adicionar evento click em todos eles
+  $navbarBurgers.forEach( el => {
+    el.addEventListener('click', () => {
+
+      const target = el.dataset.target;
+      const $target = document.getElementById(target);
+
+      el.classList.toggle('is-active');
+      $target.classList.toggle('is-active');
+
+    });
+  });
+
+});
+</script>
+
+</html>

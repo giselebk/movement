@@ -1,0 +1,49 @@
+{% extends "base1.html" %}
+{% block content %}
+<div class="hero-body is-align-items-stretch">
+   <div class="column is-8 is-offset-2 is-vcentered ">
+      <div class="box">
+         <h1 class="title is-5 has-text-centered has-text-dark"> Cadastro de Colaboradores - Resultado da Consulta </h1>
+         <table class="table mx-auto">
+            <thead>
+               <tr>
+                  <th>Matrícula</th>
+                  <th>Nome</th>
+                  <th>Cargo</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for colaborador in colaboradores %}
+               <tr>
+                  <th><a href="/colaborador/{{ colaborador.id }}">{{ colaborador.id }}</a></th>
+                  <td><a href="/colaborador/{{ colaborador.id }}">{{ colaborador.nome }}</a></td>
+                  <td><a href="/colaborador/{{ colaborador.id }}">{{ colaborador.cargo }}</a></td>
+                  <td><a href="/colaborador/{{ colaborador.id }}">{{ colaborador.situacao }}</a></td>
+                  <td>
+                     <div class="columns">
+                        <div class="column">
+                           <a href="/colaborador/{{ colaborador.id }}" title="Visualizar">
+                              <figure class="image is-24x24">
+                                 <img src="/static/eye-regular.svg">
+                              </figure>
+                           </a>
+                        </div>
+                        <div class="column">
+                           <a href="/colaborador/{{ colaborador.id }}/editar" title="Editar">
+                              <figure class="image is-24x24">
+                                 <img src="/static/pen-to-square-regular.svg">
+                              </figure>
+                           </a>
+                        </div>
+                     </div>
+                  </td>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+{% endblock %}

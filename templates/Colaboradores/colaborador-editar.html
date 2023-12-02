@@ -1,0 +1,290 @@
+{% extends "base1.html" %}
+{% block content %}
+<div class="column is-10 is-offset-1 is-vcentered">
+   {% with messages = get_flashed_messages() %}
+   {% if messages %}
+   <div class="notification is-danger">
+      {{ messages[0] }}
+   </div>
+   {% endif %}
+   {% endwith %}
+   <div class="box">
+      <h1 class="title is-4 has-text-centered has-text-dark"> Edição do Cadastro de Colaborador </h1>
+   </div>
+   <form id="formulario" method="POST" action="/colaborador/{{ matricula }}/editar" onsubmit="return confirm('Tem certeza de que deseja salvar as alterações?');">
+      <div class="box ">
+         <div class="columns">
+            <div class="column">
+               <div class="field">
+                  <label class="label">Matrícula</label>
+                  <div class="control">
+                     <input disabled class="input" type="text" name="matricula" placeholder="Matrícula do colaborador" value="{{ matricula }}">
+                  </div>
+               </div>
+            </div>
+            <div class="column">
+               <div class="field">
+                  <label class="label">Cargo<span class="has-text-danger">*</span></label>
+                  <div class="control">
+                     <div class="select is-fullwidth">
+                        <select name="cargo" required>
+                           <option disabled selected hidden></option>
+                           <option {% if cargo=='Diretor'%} selected {% endif %}>Diretor</option>
+                           <option {% if cargo=='Supervisor Administrativo'%} selected {% endif %}>Supervisor Administrativo</option>
+                           <option {% if cargo=='Supervisor de Limpeza e Manutenção'%} selected {% endif %}>Supervisor de Limpeza e Manutenção</option>
+                           <option {% if cargo=='Treinador'%} selected {% endif %}>Treinador</option>
+                           <option {% if cargo=='Técnico Administrativo'%} selected {% endif %}>Técnico Administrativo</option>
+                           <option {% if cargo=='Técnico de Limpeza'%} selected {% endif %}>Técnico de Limpeza</option>
+                           <option {% if cargo=='Técnico de Manutenção'%} selected {% endif %}>Técnico de Manutenção</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="column">
+               <div class="field">
+                  <label class="label">Situação<span class="has-text-danger">*</span></label>
+                  <div class="control">
+                     <div class="select is-fullwidth">
+                        <select name="situacao" required>
+                           <option disabled selected hidden></option>
+                           <option {% if situacao=='Ativo'%} selected {% endif %}>Ativo</option>
+                           <option {% if situacao=='Em afastamento'%} selected {% endif %}>Em afastamento</option>
+                           <option {% if situacao=='Em licença'%} selected {% endif %}>Em licença</option>
+                           <option {% if situacao=='Inativo'%} selected {% endif %}>Inativo</option>
+                           <option {% if situacao=='Excluído por erro'%} selected {% endif %}>Excluído por erro</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="columns">
+            <div class="column">
+               <div class="field">
+                  <label class="label">Nome<span class="has-text-danger">*</span></label>
+                  <div class="control">
+                     <input required class="input" type="text" placeholder="Digite o nome do colaborador" name="nome" value="{{ nome }}">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="columns">
+            <div class="column">
+               <div class="field">
+                  <label class="label">Identidade</label>
+                  <div class="control">
+                     <input class="input" type="text" placeholder="Digite o número de identidade" name="identidade" value="{{ identidade }}" maxlength="13">
+                  </div>
+               </div>
+            </div>
+            <div class="column">
+               <div class="field">
+                  <label class="label">Data de Nascimento</label>
+                  <div class="control">
+                     <input class="input" type="date" placeholder="00/00/0000" name="nascimento" value="{{ nascimento }}">
+                  </div>
+               </div>
+            </div>
+            <div class="column">
+               <div class="field">
+                  <label class="label">Gênero</label>
+                  <div class="control">
+                     <label class="radio">
+                     <input type="radio" name="genero" value="Masculino" {% if genero=='Masculino'%} checked {% endif %}>
+                     Masculino
+                     </label>
+                     <label class="radio">
+                     <input type="radio" name="genero" value="Feminino" {% if genero=='Feminino'%} checked {% endif %}>
+                     Feminino
+                     </label>
+                     <label class="radio">
+                     <input type="radio" name="genero" value="Não-binário" {% if genero=='Não-binário'%} checked {% endif %}>
+                     Não-binário
+                     </label>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="box">
+         <div class="columns">
+            <div class="column is-four-fifths">
+               <div class="field">
+                  <label class="label">Endereço residencial</label>
+                  <div class="control">
+                     <input class="input" type="text" placeholder="Avenida / rua / travessa / etc." name="endereco" value="{{ endereco }}">
+                  </div>
+               </div>
+            </div>
+            <div class="column is-one-fifth">
+               <div class="field">
+                  <label class="label">Número da residência</label>
+                  <div class="control">
+                     <input class="input" type="number" min="0" placeholder="Número"  name="numero" value="{{ numero }}">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="columns">
+            <div class="column">
+               <div class="field">
+                  <label class="label">Complemento</label>
+                  <div class="control">
+                     <input class="input" type="text" maxlength="50" placeholder="Bloco / apartamento / etc." name="complemento" value="{{ complemento }}">
+                  </div>
+               </div>
+            </div>
+            <div class="column">
+               <div class="field">
+                  <label class="label">CEP</label>
+                  <div class="control">
+                     <input class="input" type="text" placeholder="00000-000" name="cep" value="{{ cep }}" oninput="formatarCEP(this)" maxlength="9">
+                  </div>
+               </div>
+            </div>
+            <div class="column">
+               <div class="field">
+                  <label class="label">Cidade</label>
+                  <div class="control">
+                     <input class="input" type="text" maxlength="30" placeholder="Cidade" name="cidade" value="{{ cidade }}">
+                  </div>
+               </div>
+            </div>
+            <div class="column">
+               <div class="field">
+                  <label class="label">Estado</label>
+                  <div class="control">
+                     <div class="select is-fullwidth">
+                        <select name="estado">
+                           <option></option>
+                           <option {% if estado=='Acre'%} selected {% endif %}>Acre</option>
+                           <option {% if estado=='Alagoas'%} selected {% endif %}>Alagoas</option>
+                           <option {% if estado=='Amapá'%} selected {% endif %}>Amapá</option>
+                           <option {% if estado=='Amazonas'%} selected {% endif %}>Amazonas</option>
+                           <option {% if estado=='Bahia'%} selected {% endif %}>Bahia</option>
+                           <option {% if estado=='Ceará'%} selected {% endif %}>Ceará</option>
+                           <option {% if estado=='Distrito Federal'%} selected {% endif %}>Distrito Federal</option>
+                           <option {% if estado=='Espírito Santo'%} selected {% endif %}>Espírito Santo</option>
+                           <option {% if estado=='Goiás'%} selected {% endif %}>Goiás</option>
+                           <option {% if estado=='Maranhão'%} selected {% endif %}>Maranhão</option>
+                           <option {% if estado=='Mato Grosso'%} selected {% endif %}>Mato Grosso</option>
+                           <option {% if estado=='Mato Grosso do Sul'%} selected {% endif %}>Mato Grosso do Sul</option>
+                           <option {% if estado=='Minas Gerais'%} selected {% endif %}>Minas Gerais</option>
+                           <option {% if estado=='Pará'%} selected {% endif %}>Pará</option>
+                           <option {% if estado=='Paraíba'%} selected {% endif %}>Paraíba</option>
+                           <option {% if estado=='Paraná'%} selected {% endif %}>Paraná</option>
+                           <option {% if estado=='Pernambuco'%} selected {% endif %}>Pernambuco</option>
+                           <option {% if estado=='Piauí'%} selected {% endif %}>Piauí</option>
+                           <option {% if estado=='Rio de Janeiro'%} selected {% endif %}>Rio de Janeiro</option>
+                           <option {% if estado=='Rio Grande do Norte'%} selected {% endif %}>Rio Grande do Norte</option>
+                           <option {% if estado=='Rio Grande do Sul'%} selected {% endif %}>Rio Grande do Sul</option>
+                           <option {% if estado=='Rondônia'%} selected {% endif %}>Rondônia</option>
+                           <option {% if estado=='Roraima'%} selected {% endif %}>Roraima</option>
+                           <option {% if estado=='Santa Catarina'%} selected {% endif %}>Santa Catarina</option>
+                           <option {% if estado=='São Paulo'%} selected {% endif %}>São Paulo</option>
+                           <option {% if estado=='Sergipe'%} selected {% endif %}>Sergipe</option>
+                           <option {% if estado=='Tocantins'%} selected {% endif %}>Tocantins</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="columns">
+            <div class="column">
+               <div class="field">
+                  <label class="label">E-mail<span class="has-text-danger">*</span></label>
+                  <div class="control">
+                     <input class="input" type="email" placeholder="ex.: eu@voce.com" name="email" value="{{ email }}" required>
+                  </div>
+               </div>
+            </div>
+            <div class="column">
+               <div class="field">
+                  <label class="label">Telefone</label>
+                  <div class="control">
+                     <input class="input" type="tel" placeholder="Telefone de contato" name="telefone" value="{{ telefone }}" oninput="formatarTelefone(this)" maxlength="14">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="box ">
+         <div class="columns">
+            <div class="column">
+               <div class="field">
+                  <label class="label">Regime de trabalho</label>
+                  <div class="control">
+                     <div class="select is-fullwidth">
+                        <select name="regime_trabalho">
+                           <option></option>
+                           <option {% if regime_trabalho=='40 horas semanais'%} selected {% endif %}>40 horas semanais</option>
+                           <option {% if regime_trabalho=='20 horas semanais'%} selected {% endif %}>20 horas semanais</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="column">
+               <div class="field">
+                  <label class="label">Data de contratação</label>
+                  <div class="control">
+                     <input class="input" type="date" placeholder="00/00/0000" name="data_contratacao" value="{{ data_contratacao }}">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="columns">
+            <div class="column">
+               <div class="field">
+                  <label class="label">Observações</label>
+                  <div class="control">
+                     <textarea class="textarea" placeholder="Ex.: Licenças, afasttamentos, etc." name="observacoes">{{ observacoes }}</textarea>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="columns">
+         <div class="column">
+         </div>
+         <div class="column has-text-centered">
+            <div class="control">
+               <button type="submit" class="button is-link is-fullwidth">Salvar alterações</button>
+            </div>
+         </div>
+         <div class="column has-text-centered">
+            <div class="control">
+               <button id="bt-cancelar" type="button" class="button is-light is-fullwidth">Cancelar</button>
+            </div>
+         </div>
+         <div class="column">
+         </div>
+      </div>
+   </form>
+</div>
+<script>
+   document.getElementById("bt-cancelar").addEventListener("click", function () {
+       var confirmacao = confirm("Deseja cancelar a edição de dados no cadastro do colaborador?");
+       if (confirmacao) {
+           document.getElementById("formulario").reset();
+           window.location.href = "/colaborador/cadastrar/cancelado";
+       }
+   });
+
+     function formatarCEP(input) {
+       input.value = input.value
+         .replace(/\D/g, '') // Remove todos os caracteres não numéricos
+         .replace(/(\d{5})(\d{3})/, '$1-$2') // Adiciona o hífen no formato de CEP
+         .slice(0, 9); // Limita o número máximo de caracteres a 9
+     }
+
+     function formatarTelefone(input) {
+       input.value = input.value
+         .replace(/[^\d()-]/g, '') // Remove todos os caracteres que não são números, parênteses ou hífen
+         .slice(0, 14); // Limita o número máximo de caracteres a 14
+     }
+
+</script>
+{% endblock %}

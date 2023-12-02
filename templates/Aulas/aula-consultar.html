@@ -1,0 +1,62 @@
+{% extends "base1.html" %}
+{% block content %}
+<div class="hero-body is-align-items-stretch">
+   <div class="column ">
+      <div class="box">
+         <h1 class="title is-5 has-text-centered has-text-dark"> Relação de aulas</h1>
+         <h1 class="subtitle is-6 has-text-centered has-text-dark"> Selecione uma aula para editar ou excluir</h1>
+         <table class="table mx-auto">
+            <thead>
+               <tr>
+                  <th>Aula</th>
+                  <th>Treinador</th>
+                  <th>Ocorre em</th>
+                  <th>Hora inicio</th>
+                  <th>Hora fim</th>
+                  <th>Vagas</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for aula in aulas %}
+               <tr>
+                  <th><a href="/aula/{{ aula.id }}">{{ aula.nome }}</a></th>
+                  <td><a href="/aula/{{ aula.id }}">{{ aula.treinador }}</a></td>
+                  {% if aula.ocorre_em|int in range(6) %}
+                  <td><a href="/aula/{{ aula.id }}">{{ semana[aula.ocorre_em|int] }}</a></td>
+                  {% elif aula.ocorre_em == '9' %}
+                  <td><a href="/aula/{{ aula.id }}">{{ aula.data_especifica }}</a></td>
+                  {% else %}
+                  <td><a href="/aula/{{ aula.id }}">{{ aula.ocorre_em }}</a></td>
+                  {% endif %}
+                  <td><a href="/aula/{{ aula.id }}">{{ aula.hora_inicio }}</a></td>
+                  <td><a href="/aula/{{ aula.id }}">{{ aula.hora_fim }}</a></td>
+                  <td><a href="/aula/{{ aula.id }}">{{ aula.quantidade_vagas }}</a></td>
+                  <td><a {% if aula.status=='Inativo' %}class="has-text-danger"{% endif %} href="/aula/{{ aula.id }}">{{ aula.status }}</a></td>
+                  <td>
+                     <div class="columns">
+                        <div class="column">
+                           <a href="/aula/{{ aula.id }}" title="Editar">
+                              <figure class="image is-24x24">
+                                 <img src="/static/pen-to-square-regular.svg">
+                              </figure>
+                           </a>
+                        </div>
+                        <div class="column {% if session['perfil'] == 'aluno' %} is-hidden {% endif %}">
+                           <a href="/aula/{{ aula.id }}/reservas" title="Inscritos">
+                              <figure class="image is-24x24">
+                                 <img src="/static/lista-alunos2.png">
+                              </figure>
+                           </a>
+                        </div>
+                     </div>
+                  </td>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+{% endblock %}

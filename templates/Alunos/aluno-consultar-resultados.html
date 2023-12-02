@@ -1,0 +1,59 @@
+{% extends "base1.html" %}
+{% block content %}
+
+<div class="hero-body is-align-items-stretch">
+
+   <div class="column is-8 is-offset-2 is-vcentered ">
+
+      <div class="box">
+
+         <h1 class="title is-5 has-text-centered has-text-dark"> Cadastro de Alunos - Resultado da Consulta </h1>
+
+         <table class="table mx-auto">
+
+            <thead>
+               <tr>
+                  <th>Matrícula</th>
+                  <th>Nome</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+               </tr>
+            </thead>
+
+            <tbody>
+               {% for aluno in alunos %}
+               <tr>
+                  <th><a href="/aluno/{{ aluno.id }}">{{ aluno.id }}</a></th>
+                  <td><a href="/aluno/{{ aluno.id }}">{{ aluno.nome }}</a></td>
+                  <td><a href="/aluno/{{ aluno.id }}">{{ aluno.situacao }}</a></td>
+                  <td>
+                     <div class="columns">
+                        <div class="column">
+                           <a href="/aluno/{{ aluno.id }}" title="Visualizar">
+                              <figure class="image is-24x24">
+                                 <img src="/static/eye-regular.svg">
+                              </figure>
+                           </a>
+                        </div>
+                        <div class="column {% if session['perfil'] == 'treinador' %} is-hidden {% endif %}">
+                           <a href="/aluno/{{ aluno.id }}/editar" title="Editar">
+                              <figure class="image is-24x24">
+                                 <img src="/static/pen-to-square-regular.svg">
+                              </figure>
+                           </a>
+                        </div>
+                     </div>
+                  </td>
+               </tr>
+               {% endfor %}
+            </tbody>
+
+         </table>
+
+      </div>
+
+   </div>
+
+</div>
+
+{% endblock %}

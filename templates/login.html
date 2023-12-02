@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movement</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  </head>
+  <body>
+  
+  <!-------------------- Barra de logo -------------------->
+	<nav class="navbar" role="navigation" aria-label="main navigation">
+	  <div class="navbar-brand">
+		<a class="navbar-item" href="/">
+		  <img src="../static/movement-logo.png" width="150" height="28">
+		</a>
+	  </div>
+	</nav>
+
+  <!-------------------- Conteúdo -------------------->
+  
+	<section class="hero is-primary is-fullheight-with-navbar">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+
+				<div class="column is-4 is-offset-4">
+					<h3 class="title">Login</h3>
+					<div class="box">
+					
+					{% with messages = get_flashed_messages() %}
+					{% if messages %}
+					
+						<div class="notification is-danger">
+							{{ messages[0] }}
+						</div>
+						
+					{% endif %}
+					{% endwith %}
+
+						<form method="POST" action="/login">
+							<div class="field">
+								<div class="control">
+									<input class="input is-large" type="email" name="email" id="email" placeholder="E-mail" autofocus="">
+								</div>
+							</div>
+
+							<div class="field">
+								<div class="control">
+									<input class="input is-large" type="password" name="password" placeholder="Senha">
+								</div>
+							</div>
+							<button class="button is-block is-info is-large is-fullwidth">Entrar</button>
+							<br>
+							<a class="has-text-info" href="#" id="recuperar-senha-link">Recuperar senha</a>
+
+						</form>
+						
+					</div>
+				</div>			
+            </div>
+        </div>
+    
+	
+	
+	</section>
+
+<a class="has-text-info" href="#" id="recuperar-senha-link">Recuperar senha</a>
+<script>
+  document.getElementById('recuperar-senha-link').addEventListener('click', function() {
+    var email = document.getElementById('email').value;
+    if (email.trim() === '') {
+      alert('Por favor, preencha o campo de e-mail.');
+      return;
+    }
+
+    var encodedEmail = encodeURIComponent(email);
+    window.location.href = '/recuperar_senha?email=' + encodedEmail;
+  });
+</script>
+
+
+
+  </body>
+</html>

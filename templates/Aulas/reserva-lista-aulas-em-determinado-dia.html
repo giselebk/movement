@@ -1,0 +1,65 @@
+{% extends "base1.html" %}
+{% block content %}
+<style>
+   .table__wrapper {
+   overflow-x: auto;
+   }
+</style>
+<div class="columns is-centered is-flex-grow-1	">
+
+   <div class="column is-narrow">
+   
+      <div class="box">
+	  
+         <h1 class="title is-5 has-text-centered has-text-dark"> Reserva de aula para "{{ aluno.nome }}"</h1>
+         <h1 class="subtitle is-6 has-text-centered has-text-dark mt-1"> Aulas cadastradas para {{ data.strftime('%d/%m/%Y') }}</h1>
+         <br>
+         <div class="table__wrapper">
+		 
+            <table class="table mx-auto">
+			
+               <thead>
+                  <tr>
+                     <th>Aula</th>
+                     <th>Treinador</th>
+                     <th>Hora inicio</th>
+                     <th>Hora fim</th>
+                     <th>Vagas</th>
+                     <th></th>
+                  </tr>
+               </thead>
+			   
+               <tbody>
+                  {% for aula in aulas %}
+                  <tr>
+                     <th>{{ aula.nome }}</th>
+                     <td>{{ aula.treinador }}</td>
+                     <td>{{ aula.hora_inicio }}</td>
+                     <td>{{ aula.hora_fim }}</td>
+                     <td>{{ vagas[loop.index-1] }}</td>
+                     <td> 
+						{% if data <= hoje %}
+						Incrições encerradas
+						{% elif vagas[loop.index-1] <= 0 %}
+						Aula lotada
+						{% else %}
+                        <a href="#" onclick="return confirm('Tem certeza de que deseja reservar esta aula?') ? window.location.href='{{ url_for('reservarAula_dataEspecifica', id=aula.id, aluno=aluno.id, data=data) }}' : false;">
+                        <button>reservar</button>
+                        </a>
+						{% endif %}
+                     </td>
+                  </tr>
+                  {% endfor %}
+               </tbody>
+			   
+            </table>
+			
+         </div>
+		 
+      </div>
+	  
+   </div>
+   
+</div>
+
+{% endblock %}

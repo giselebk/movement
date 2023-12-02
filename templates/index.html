@@ -1,0 +1,40 @@
+{% extends "base1.html" %}
+{% block content %}
+<div class="columns has-text-centered">
+   <div class="column">
+   </div>
+   <div class="column">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <div class="notification is-warning mt-6" id="mensagem">
+         {{ messages[0] }}
+      </div>
+      {% endif %}
+      {% endwith %}
+   </div>
+   <div class="column">
+   </div>
+</div>
+<div class="hero-body">
+   <div class="container has-text-centered">
+      <h1 class="title">
+         Bem vindo ao Movement!
+      </h1>
+      <p class="subtitle">
+         Sistema da academia Oficina do Corpo
+      </p>
+      <br>
+      <br>
+      <br>
+      <br>
+   </div>
+</div>
+<script>
+   document.addEventListener('click', function(event) {
+   	var myDiv = document.getElementById('mensagem');
+   	if (event.target !== myDiv) {
+   		myDiv.style.display = 'none';
+   	}
+   });
+</script>
+{% endblock %}

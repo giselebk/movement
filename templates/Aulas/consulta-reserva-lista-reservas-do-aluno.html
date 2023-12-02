@@ -1,0 +1,70 @@
+{% extends "base1.html" %}
+{% block content %}
+
+<style>
+   .table__wrapper {
+   overflow-x: auto;
+   }
+</style>
+
+<div class="columns is-centered is-flex-grow-1	">
+
+   <div class="column is-narrow">
+
+      <div class="box">
+	  
+         <h1 class="title is-5 has-text-centered has-text-dark"> Aulas reservadas para "{{ aluno.nome }}"</h1>
+		 
+         {% with messages = get_flashed_messages() %}
+         {% if messages %}
+         <div class="notification {% if 'sucesso' in messages[0] %} is-info {% else %} is-warning {% endif %}">
+            {{ messages[0] }}
+         </div>
+         {% endif %}
+         {% endwith %}
+		 
+         <div class="table__wrapper">
+		 
+            <table class="table mx-auto">
+			
+               <thead>
+                  <tr>
+                     <th>Data</th>
+                     <th>Aula</th>
+                     <th>Treinador</th>
+                     <th>Início</th>
+                     <th>Fim</th>
+                     <th>Ações</th>
+                  </tr>
+               </thead>
+			   
+               <tbody>
+                  {% for i in range(datas|length) %}
+                  <tr>
+                     <th>{{ datas[i][8:10] }}/{{ datas[i][5:7] }}/{{ datas[i][0:4] }}</th>
+                     <td>{{ aulas[i] }}</td>
+                     <td>{{ treinadores[i] }}</td>
+                     <td>{{ horas_inicio[i] }}</td>
+                     <td>{{ horas_fim[i] }}</td>
+                     <td>
+                        {% if cancelar[i]=="sim" %}
+                        <a href="#" onclick="return confirm('Tem certeza de que deseja cancelar esta reserva?') ? window.location.href='{{ url_for('excluiReserva', id=ids[i], aluno=aluno.id) }}' : false;">
+                        <button>cancelar</button>
+                        </a>
+                        {% endif %}
+                     </td>
+                  </tr>
+                  {% endfor %}
+               </tbody>
+			   
+            </table>
+			
+         </div>
+		 
+      </div>
+	  
+   </div>
+   
+</div>
+
+{% endblock %}

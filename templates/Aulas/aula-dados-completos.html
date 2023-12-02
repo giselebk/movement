@@ -1,0 +1,189 @@
+{% extends "base1.html" %}
+
+{% block content %}
+
+<div class="column is-8 is-offset-2 is-vcentered">
+	
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<div class="notification is-danger">
+				{{ messages[0] }}
+			</div>
+		{% endif %}
+		{% endwith %}
+		
+	<!-- Box com título do formulário -->
+	<form id="formulario" method="POST" action="/aula/{{ aula.id }}" onsubmit="return confirm('Tem certeza de que deseja salvar essas informações?');">
+		
+	<div class="box">		
+		<h1 class="title is-4 has-text-centered has-text-dark"> Dados da Aula </h1>
+	</div>
+	
+	<div class="box ">
+		<!-- 1a linha -->
+		<div class="columns">
+		  <div class="column">
+				<div class="field">
+				  <label class="label">Treinador<span class="has-text-danger">*</span></label>
+				  <div class="control">
+						<div class="select is-fullwidth">
+						  <select name="treinador" required>
+							<option disabled selected hidden></option>
+							{% for treinador in treinadores %}
+							<option {% if aula.treinador==treinador.nome %}selected{% endif %}>{{ treinador.nome }}</option>
+							{% endfor %}
+						  </select>
+						</div>
+				  </div>
+				</div>
+		  </div>
+		  <div class="column">
+				<div class="field">
+				  <label class="label">Status<span class="has-text-danger">*</span></label>
+				  <div class="control">
+						<div class="select is-fullwidth">
+						  <select name="status" required>
+							<option disabled selected hidden></option>
+							<option {% if aula.status=="Ativo" %}selected{% endif %}>Ativo</option>
+							<option {% if aula.status=="Inativo" %}selected{% endif %}>Inativo</option>
+						  </select>
+						</div>
+				  </div>
+				</div>
+		  </div>
+		</div>
+
+		<!-- 2a linha -->
+		<div class="columns">
+		  <div class="column">
+				<div class="field">
+				  <label class="label">Nome da Aula / Modalidade<span class="has-text-danger">*</span><span class="has-text-danger">*</span></label>
+				  <div class="control">
+					<input class="input" type="text" placeholder="Digite o nome da aula ou da modalidade" name="nome" required value="{{aula.nome}}">
+				  </div>
+				</div>
+		  </div>
+		</div>
+		
+	</div>
+	
+	<div class="box">
+		<!-- 4a linha -->
+		<div class="columns">
+		  <div class="column">
+				<div class="field">
+				  <label class="label">Ocorrem em<span class="has-text-danger">*</span></label>
+				  <div class="control">
+						<div class="select is-fullwidth">
+						  <select id="ocorrencia" name="ocorre_em" required>
+							<option disabled selected hidden></option>
+							<option value=0 {% if aula.ocorre_em=="0" %}selected{% endif %}>Toda segunda-feira</option>
+							<option value=1 {% if aula.ocorre_em=="1" %}selected{% endif %}>Toda terça-feira</option>
+							<option value=2 {% if aula.ocorre_em=="2" %}selected{% endif %}>Toda quarta-feira</option>
+							<option value=3 {% if aula.ocorre_em=="3" %}selected{% endif %}>Toda quinta-feira</option>
+							<option value=4 {% if aula.ocorre_em=="4" %}selected{% endif %}>Toda sexta-feira</option>
+							<option value=5 {% if aula.ocorre_em=="5" %}selected{% endif %}>Todo sábado</option>
+							<option value=9 {% if aula.ocorre_em=="9" %}selected{% endif %}>Data específica</option>
+						  </select>
+						</div>
+				  </div>
+				</div>
+		  </div>
+		  <div class="column is-one-third"  id="data_especifica" {% if aula.ocorre_em!="9" %}style="display: none;"{% endif %}>
+				<div class="field">
+				  <label class="label">Data<span class="has-text-danger">*</span></label>
+				  <div class="control">
+					<input class="input" type="date" placeholder="00/00/0000"  name="data_especifica" value="{{aula.data_especifica}}">
+				  </div>
+				</div>
+		  </div>
+		</div>
+		<!-- 5a linha -->
+		<div class="columns">
+		  <div class="column">
+				<div class="field">
+				  <label class="label">Hora início<span class="has-text-danger">*</span></label>
+				  <div class="control">
+					<input class="input" type="time" placeholder="00:00" name="hora_inicio"  value="{{ aula.hora_inicio }}" required id="hora_inicio">
+				  </div>
+				</div>
+		  </div>
+		  <div class="column">
+				<div class="field">
+				  <label class="label">Hora fim<span class="has-text-danger">*</span></label>
+				  <div class="control">
+					<input class="input" type="time" placeholder="00:00" name="hora_fim" value="{{ aula.hora_fim }}" required id="hora_fim">
+				  </div>
+				</div>
+		  </div>
+		  <div class="column">
+				<div class="field">
+				  <label class="label">Quantidade de vagas<span class="has-text-danger">*</span></label>
+				  <div class="control">
+					<input class="input" type="number" min="1" placeholder="00" name="quantidade_vagas" value="{{ aula.quantidade_vagas }}" required>
+				  </div>
+				</div>
+		  </div>
+		</div>
+
+	</div>
+
+	<!-- Botões -->
+	<div class="columns">
+		<div class="column">
+		</div>
+		<div class="column">
+			  <div class="control">
+				<button type="submit" class="button is-link is-fullwidth">Atualizar</button>
+			  </div>
+		</div>
+		<div class="column has-text-centered">
+			  <div class="control">
+				<button id="bt-voltar" type="button" class="button is-light is-fullwidth">Voltar</button>
+			  </div>
+		</div>
+		<div class="column">
+		</div>
+	</div>
+	
+</div>
+
+<script>
+document.getElementById("bt-voltar").addEventListener("click", function () {
+    // Pede a confirmação do usuário
+        window.history.back();
+});
+
+  document.getElementById("ocorrencia").addEventListener("change", function() {
+    var campoDataEspecifica = document.getElementById("data_especifica");
+    if (this.value === "9") {
+      campoDataEspecifica.style.display = "block";
+      campoDataEspecifica.getElementsByTagName("input")[0].required = true;
+    } else {
+      campoDataEspecifica.style.display = "none";
+      campoDataEspecifica.getElementsByTagName("input")[0].required = false;
+    }
+  });
+
+  const horaInicioInput = document.getElementById('hora_inicio');
+  const horaFimInput = document.getElementById('hora_fim');
+
+  horaInicioInput.addEventListener('change', function() {
+    if (horaFimInput.value && horaInicioInput.value >= horaFimInput.value) {
+      horaFimInput.setCustomValidity('A hora de término deve ser maior que a hora de início.');
+    } else {
+      horaFimInput.setCustomValidity('');
+    }
+  });
+
+  horaFimInput.addEventListener('change', function() {
+    if (horaInicioInput.value && horaFimInput.value <= horaInicioInput.value) {
+      horaFimInput.setCustomValidity('A hora de término deve ser maior que a hora de início.');
+    } else {
+      horaFimInput.setCustomValidity('');
+    }
+  });
+
+</script>
+
+{% endblock %}

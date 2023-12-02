@@ -1,0 +1,27 @@
+{% extends "base1.html" %}
+
+{% block content %}
+
+<div class="hero-body is-align-items-stretch">
+	<div class="column is-6 is-offset-3 is-vcentered">
+		<article class="message is-info">
+			<div class="message-header">
+				<p>{{ mensagem }}</p>
+				<button class="delete" aria-label="delete" id="fechar"/>
+			</div>
+			<div class="message-body ">
+				<p><strong>Matrícula:</strong> {{ matricula }}</p>
+				<p><strong>Nome:</strong> {{ nome }}</p>
+			</div>
+		</article>
+	</div>
+</div>
+
+<script>
+document.getElementById("fechar").addEventListener("click", function () {
+    window.location.href = "/";
+});
+</script>
+
+{% endblock %}
+

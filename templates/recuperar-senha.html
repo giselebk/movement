@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movement</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  </head>
+  <body>
+  
+  <!-------------------- Barra de logo -------------------->
+	<nav class="navbar" role="navigation" aria-label="main navigation">
+	  <div class="navbar-brand">
+		<a class="navbar-item" href="/">
+		  <img src="../static/movement-logo.png" width="150" height="28">
+		</a>
+	  </div>
+	</nav>
+	
+  <!-------------------- conteúdo -------------------->	
+	<section class="hero is-primary is-fullheight-with-navbar">	
+	
+		<div class="columns">
+		   <div class="column">
+		   </div>
+		   <div class="column">
+			  <form class="box mt-6" method="POST" action="/perfil">
+				 <div class="container">
+					<figure class="image is-128x128 mb-3 mt-3" style="display: block; margin: auto;">
+					   <img class="is-rounded" src="static/shield.png" >
+					</figure>
+				 </div>
+				 <h1 class="title has-text-black has-text-centered" > Recuperação de senha </h1>
+				 <p class="has-text-centered">Esta é a página de recuperação de senha. Em situações reais, um email seria enviado ao usuário para redefinir a senha. </p>
+				 <br>
+				 <p class="has-text-centered">No entanto, para fins deste experimento, se o email <strong>{{ email }}</strong> existir na base de cadastro, a conta associada terá a senha redefinida para "movement".</p>
+				 <br>
+				 <div class="columns">
+					<div class="column">
+					</div>
+					<div class="column">
+					   <a href="/" class="button is-link is-light">voltar</a>
+					</div>
+					<div class="column">
+					</div>
+				 </div>
+			  </form>
+		   </div>
+		   <div class="column">
+		   </div>
+		</div>
+
+	</section>
+
+</body>
+</html>

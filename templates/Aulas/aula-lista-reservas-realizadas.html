@@ -1,0 +1,38 @@
+{% extends "base1.html" %}
+{% block content %}
+<div class="hero-body is-align-items-stretch is-justify-content-center	">
+
+   <div class="column is-narrow is-vcentered ">
+   
+      <div class="box px-6 mx-6">
+	  
+         <h1 class="title is-5 has-text-centered has-text-dark"> Reservas para a aula "{{ aula.nome }}"</h1>
+         <h1 class="subtitle is-6 has-text-centered has-text-dark"> {{ ocorre_em }} às {{ aula.hora_inicio }}</h1>
+         
+		 <table class="table mx-auto is-bordered ">
+		 
+            <thead>
+               <tr>
+                  <th>Data</th>
+                  <th>Aluno</th>
+               </tr>
+            </thead>
+			
+            <tbody>
+               {% for i in range(datas|length) %} 
+               <tr>
+                  <th>{{ datas[i] }}</th>
+                  <td>{{ alunos[i].nome }}</td>
+               </tr>
+               {% endfor %}
+            </tbody>
+			
+         </table>
+		 
+      </div>
+	  
+   </div>
+   
+</div>
+
+{% endblock %}

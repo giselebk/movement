@@ -1,0 +1,40 @@
+{% extends "base1.html" %}
+{% block content %}
+<div class="hero-body is-align-items-stretch">
+
+   <div class="column is-8 is-offset-2 is-vcentered ">
+   
+      <div class="box">
+	  
+         <h1 class="title is-5 has-text-centered has-text-dark"> Consultar reserva de aluno </h1>
+         <h1 class="subtitle is-6 has-text-centered has-text-dark"> Selecione um aluno: </h1>
+		 
+         <table class="table mx-auto">
+		 
+            <thead>
+               <tr>
+                  <th>Matrícula</th>
+                  <th>Nome</th>
+                  <th>Status</th>
+               </tr>
+            </thead>
+			
+            <tbody>
+               {% for aluno in alunos %}
+               <tr>
+                  <th><a href="/aluno/{{ aluno.id }}/reservas">{{ aluno.id }}</a></th>
+                  <td><a href="/aluno/{{ aluno.id }}/reservas">{{ aluno.nome }}</a></td>
+                  <td><a href="/aluno/{{ aluno.id }}/reservas">{{ aluno.situacao }}</a></td>
+               </tr>
+               {% endfor %}
+            </tbody>
+			
+         </table>
+		 
+      </div>
+	  
+   </div>
+   
+</div>
+
+{% endblock %}

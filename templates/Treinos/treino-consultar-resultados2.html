@@ -1,0 +1,103 @@
+{% extends "base1.html" %}
+
+{% block content %}
+
+<style>
+   .table__wrapper {
+   overflow-x: auto;
+   overflow-y: hidden;
+   }
+</style>
+
+<div class="columns is-centered is-flex-grow-1	">
+
+   <div class="column is-narrow">
+   
+      <div class="box">
+	  
+         <h1 class="title is-4 has-text-centered has-text-dark"> Planos de treinos de "{{ aluno.nome }}" </h1>
+         <h1 class="subtitle is-5 has-text-centered has-text-dark"> Selecione um treino: </h1>
+		 
+         {% if treinos|length == 0 %}
+         <p class="has-text-centered mt-6 mb-3">Não foram encontrados planos de treinos para esse aluno.</p>
+		 
+         {% else %}
+		 
+		 <div class="table__wrapper">
+		 
+			 <table class="table mx-auto">
+			 
+				<thead>
+				   <tr>
+					  <th>Data</th>
+					  <th>Matrícula</th>
+					  <th>Aluno</th>
+					  <th>Treinador</th>
+					  <th>Status</th>
+					  <th>Ações</th>
+				   </tr>
+				</thead>
+				
+				<tbody>
+				   {% for treino in treinos %}
+				   <tr>
+					  <th><a href="/treino/{{ treino.id }}">{{ treino.data_criacao }}</a></th>
+					  <td><a href="/treino/{{ treino.id }}">{{ aluno.id }}</a></td>
+					  <td><a href="/treino/{{ treino.id }}">{{ aluno.nome }}</a></td>
+					  <td><a href="/treino/{{ treino.id }}">{{ treino.treinador }}</a></td>
+					  <td>
+						<a href="/treino/{{ treino.id }}" {% if treino.status=='Inativo' %} class="has-text-danger" {% endif %}>
+							{{ treino.status }}
+						</a>
+					  </td>
+					  <td>
+						 <div class="columns">
+							<div class="column">
+							   <a href="/treino/{{ treino.id }}" title="Visualizar">
+								  <figure class="image is-24x24">
+									 <img src="/static/eye-regular.svg">
+								  </figure>
+							   </a>
+							</div>
+							<div class="column {% if session['perfil'] == 'aluno' %} is-hidden {% endif %}">
+							   <a href="/treino/{{ treino.id }}/editar" title="Editar">
+								  <figure class="image is-24x24">
+									 <img src="/static/pen-to-square-regular.svg">
+								  </figure>
+							   </a>
+							</div>
+						 </div>
+					  </td>
+				   </tr>
+				   {% endfor %}
+				</tbody>
+				
+			 </table>
+		 
+		 </div>
+         {% endif %}
+		 
+      </div>
+	  
+      <div class="columns">
+         <div class="column">
+         </div>
+         <div class="column has-text-centered">
+            <div class="control">
+               <button id="bt-voltar" type="button" class="button is-light is-fullwidth">Voltar</button>
+            </div>
+         </div>
+         <div class="column">
+         </div>
+      </div>
+	  
+   </div>
+   
+</div>
+
+<script>
+   document.getElementById("bt-voltar").addEventListener("click", function () {
+           window.history.back();
+       });
+</script>
+{% endblock %}

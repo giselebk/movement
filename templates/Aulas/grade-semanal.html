@@ -1,0 +1,87 @@
+{% extends "base1.html" %}
+{% block content %}
+<div class="hero-body is-align-items-stretch">
+
+   <div class="column ">
+   
+      <div class="box">
+	  
+         <h1 class="title is-5 has-text-centered has-text-dark"> Grade semanal de aulas</h1>
+		 
+         <div class="columns has-text-centered">
+		 
+            <div class="column">
+               Segunda-feira
+               {% for segunda in segundas %}
+               <div class="my-2 has-background-info-light	">
+                  <p>{{ segunda.nome }}</p>
+                  <p>{{ segunda.hora_inicio }} - {{ segunda.hora_fim }}</p>
+                  <p>Prof. {{ segunda.treinador }}</p>
+               </div>
+               {% endfor %}
+            </div>
+			
+            <div class="column">
+               Terça-feira
+               {% for terca in tercas %}
+               <div class="my-2 has-background-info-light	">
+                  <p>{{ terca.nome }}</p>
+                  <p>{{ terca.hora_inicio }} - {{ terca.hora_fim }}</p>
+                  <p>Prof. {{ terca.treinador }}</p>
+               </div>
+               {% endfor %}
+            </div>
+			
+            <div class="column">
+               Quarta-feira
+               {% for quarta in quartas %}
+               <div class="my-2 has-background-info-light	">
+                  <p>{{ quarta.nome }}</p>
+                  <p>{{ quarta.hora_inicio }} - {{ quarta.hora_fim }}</p>
+                  <p>Prof. {{ quarta.treinador }}</p>
+               </div>
+               {% endfor %}
+            </div>
+			
+            <div class="column">
+               Quinta-feira
+               {% for quinta in quintas %}
+               <div class="my-2 has-background-info-light	">
+                  <p>{{ quinta.nome }}</p>
+                  <p>{{ quinta.hora_inicio }} - {{ quinta.hora_fim }}</p>
+                  <p>Prof. {{ quinta.treinador }}</p>
+               </div>
+               {% endfor %}
+            </div>
+			
+            <div class="column">
+               Sexta-feira
+               {% for sexta in sextas %}
+               <div class="my-2 has-background-info-light	">
+                  <p>{{ sexta.nome }}</p>
+                  <p>{{ sexta.hora_inicio }} - {{ sexta.hora_fim }}</p>
+                  <p>Prof. {{ sexta.treinador }}</p>
+               </div>
+               {% endfor %}
+            </div>
+			
+            <div class="column">
+               Sábado
+               {% for sabado in sabados %}
+               <div class="my-2 has-background-info-light	">
+                  <p>{{ sabado.nome }}</p>
+                  <p>{{ sabado.hora_inicio }} - {{ sabado.hora_fim }}</p>
+                  <p>Prof. {{ sabado.treinador }}</p>
+               </div>
+               {% endfor %}
+            </div>
+			
+         </div>
+		 
+      </div>
+	  
+   </div>
+   
+</div>
+
+{% endblock %}

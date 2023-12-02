@@ -1,0 +1,51 @@
+{% extends "base1.html" %}
+{% block content %}
+<div class="hero-body is-align-items-stretch">
+   <div class="column is-6 is-offset-3 is-vcentered ">
+      <div class="box">
+         <h1 class="title is-4 has-text-centered has-text-dark"> Consultar Plano de Treino </h1>
+         <h1 class="subtitle is-5 has-text-centered has-text-dark"> Pesquisar aluno </h1>
+         <br>
+         <form method="POST" action="/treino/consultar-matricula">
+            <div class="columns is-vcentered">
+               <div class="column is-one-fifth">
+                  <h1 class="title is-6 has-text-dark ">Matrícula</h1>
+               </div>
+               <div class="column">
+                  <div class="field has-addons">
+                     <div class="control is-expanded">
+                        <input class="input " type="text" placeholder="Informe a matrícula do aluno" name="matricula">
+                     </div>
+                     <div class="control">
+                        <button class="button is-info" type="submit"> Pesquisar </button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </form>
+         <div class="columns is-vcentered">
+            <div class="column has-text-centered">
+               <p class="title is-6 has-text-dark"> ou </p>
+            </div>
+         </div>
+         <form method="POST" action="/treino/consultar-nome">
+            <div class="columns is-vcentered">
+               <div class="column is-one-fifth">
+                  <h1 class="title is-6 has-text-dark ">Nome</h1>
+               </div>
+               <div class="column">
+                  <div class="field has-addons">
+                     <div class="control is-expanded">
+                        <input class="input " type="text" placeholder="Informe o nome do aluno" name="nome">
+                     </div>
+                     <div class="control">
+                        <button class="button is-info" type="submit"> Pesquisar </button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+{% endblock %}

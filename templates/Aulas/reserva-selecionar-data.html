@@ -1,0 +1,45 @@
+{% extends "base1.html" %}
+{% block content %}
+
+<div class="hero-body is-align-items-stretch is-justify-content-center	">
+   
+   <div class="column is-narrow is-vcentered ">
+	  
+      <div class="box px-6 mx-6">
+	  
+         <h1 class="title is-5 has-text-centered has-text-dark"> Reserva de aula para "{{ aluno.nome }}"</h1>
+         <h1 class="subtitle is-6 has-text-centered has-text-dark mt-1"> Selecione a data: </h1>
+		 
+         <form method="POST" action="/aluno/{{ aluno.id }}/reservar-aula">
+            <div class="columns is-vcentered is-justify-content-center	">
+               <div class="column">
+                  <div class="field has-addons">
+				  
+                     <div class="control is-expanded">
+                        <input class="input " type="date" name="data" value="{{ hoje }}" required">
+                     </div>
+					 
+                     <div class="control">
+                        <button class="button is-info" type="submit"> Pesquisar </button>
+                     </div>
+					 
+                  </div>
+               </div>
+            </div>
+         </form>
+		 
+         <br>
+         {% with messages = get_flashed_messages() %}
+         {% if messages %}
+         <div class="notification is-danger">
+            {{ messages[0] }}
+         </div>
+         {% endif %}
+         {% endwith %}
+      </div>
+	  
+   </div>
+   
+</div>
+
+{% endblock %}
